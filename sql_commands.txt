@@ -1,0 +1,61 @@
+
+In all ============71637 records to update + 4 N/A records========================
+select count(*) from records 
+                                where 1=1 
+                                and updatedAt is not null                                             
+        AND (questionID = 137 OR questionID = 139)
+        and answer != 'N/A'
+        and answer not like '["%'
+71637
+
+
+Updating I, single option==========61060 updated===============
+update records set answer = concat('["', answer, '"]') 
+                                where 1=1 
+                                and updatedAt is not null                                             
+        AND (questionID = 137 OR questionID = 139)
+        and answer not like '%,%'
+        and answer != 'N/A'
+        and answer not like '["%'
+
+11:29:07               update records set answer = concat('["', answer, '"]')    where 1=1    and updatedAt is not null             AND (questionID = 137 OR questionID = 139)         and answer not like '%,%'         and answer != 'N/A'         and answer not like '["%'       61060 row(s) affected Rows matched: 61060  Changed: 61060  Warnings: 0           1.515 sec
+
+
+Updating II, multiple ==================10577 records=============================
+select count(*) from records 
+                                where 1=1 
+                                and updatedAt is not null                                             
+        AND (questionID = 137 OR questionID = 139)
+        and answer like '%,%'
+        and answer != 'N/A'
+        and answer not like '["%'
+10577
+
+Updated by=============
+
+update records set answer = concat('["', REPLACE(answer, ',', '","'), '"]') 
+                                where 1=1 
+                                and updatedAt is not null                                             
+        AND (questionID = 137 OR questionID = 139)
+        and answer like '%,%'
+        and answer != 'N/A'
+        and answer not like '["%'
+
+
+updating III N/A =================4 records==================
+updated by
+select * from records 
+                                where 1=1 
+                                and updatedAt is not null                                             
+        AND (questionID = 137 OR questionID = 139)
+        and answer like '%N/A%'
+        and answer not like '["%'
+
+
+
+Updated N/A to Not applicable================
+update records set answer = REPLACE(answer, 'N/A', 'Not applicable')
+                                where 1=1 
+                                and updatedAt is not null                                             
+        AND (questionID = 137 OR questionID = 139)
+        and answer like '%N/A%'
